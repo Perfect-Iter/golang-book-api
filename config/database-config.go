@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"ginPractical/entity"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -29,6 +30,7 @@ func SetupDatabaseConnection() *gorm.DB {
 	}
 
 	//db automigrate
+	db.AutoMigrate(&entity.Book{}, &entity.User{})
 	return db
 }
 

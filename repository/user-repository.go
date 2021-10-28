@@ -42,7 +42,15 @@ func hashAndsalt(pwd []byte) string {
 	return string(hash)
 }
 func (db *userConnection) UpdateUser(user entity.User) entity.User {
-	user.Password = hashAndsalt([]byte(user.Password))
+	if user.Password !==""{
+		user.Password = hashAndsalt([]byte(user.Password))
+	}else{
+		var tempUser entity.User
+		db.connection.Find(&tempUser, user.ID)
+		user.password = tempUser.password
+
+	}
+	
 	db.connection.Save(&user)
 	return user
 }
